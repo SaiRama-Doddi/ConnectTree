@@ -1,0 +1,12 @@
+# Node
+node_modules/
+npm-debug.log
+yarn.lock
+package-lock.json
+
+# Env
+.env
+
+# Build
+dist/
+build/
