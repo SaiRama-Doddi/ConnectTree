@@ -113,14 +113,7 @@ export default function AdminDashboard() {
   return (
     <>
     <Navbar />
-    <div className="flex">
-  <button
-    onClick={handleLogout}
-    className="ml-auto bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition font-medium"
-  >
-    Logout
-  </button>
-</div>
+  
 
     <div className="p-6">
       <h1 className="text-2xl font-bold">Manager Dashboard</h1>

@@ -104,6 +104,9 @@ function App() {
 
 
 
+ // Generate the card URL (you can adjust domain or route as needed)
+  const cardUrl = `${window.location.origin}/cards/${card._id}`;
+
   const cardText = `
 Gmail: ${card.gmail}
 Location: ${card.location}
@@ -114,11 +117,12 @@ Contact: ${card.contact}
 Twitter: ${card.twitter || "N/A"}
 Instagram: ${card.instagram || "N/A"}
 Description: ${card.description}
+View Card: ${cardUrl}
 `;
 
-  const copyToClipboard = () => {
+const copyToClipboard = () => {
     navigator.clipboard.writeText(cardText);
-    alert("Card copied to clipboard!");
+    alert("Card details copied to clipboard!");
   };
 
 
@@ -301,14 +305,7 @@ Description: ${card.description}
 
      <Navbar />
 
-        <div className="flex">
-  <button
-    onClick={handleLogout}
-    className="ml-auto bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition font-medium"
-  >
-    Logout
-  </button>
-</div>
+     
       {/* Main Content */}
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row gap-6 p-6">
@@ -493,6 +490,8 @@ Description: ${card.description}
 
                 {/* Action Buttons */}
                 <div className="flex gap-3 mb-6">
+              
+
                   <button className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg transition-colors text-sm font-medium"
                    onClick={() => setIsModalOpen(true)}>
                     <Share2 className="w-4 h-4" />
@@ -515,41 +514,53 @@ Description: ${card.description}
 
 
 {/* Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative">
-            {/* Close Button */}
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
-            >
-              <X className="w-5 h-5" />
-            </button>
+{/* Modal */}
+{isModalOpen && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+    <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative">
 
-            <h2 className="text-lg font-semibold mb-4">Share Card</h2>
-            <textarea
-              readOnly
-              value={cardText}
-              className="w-full h-48 p-2 border border-gray-300 rounded mb-4 resize-none"
-            />
+      {/* Close Button */}
+      <button
+        onClick={() => setIsModalOpen(false)}
+        className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+      >
+        <X className="w-5 h-5" />
+      </button>
 
-            <div className="flex justify-end gap-2">
-              <button
-                onClick={copyToClipboard}
-                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-              >
-                Copy
-              </button>
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 transition"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <h2 className="text-lg font-semibold mb-4">Share Card</h2>
+
+      {/* Shareable URL */}
+      <label className="font-medium text-gray-700 mb-1">Shareable URL</label>
+      <div className="flex gap-2 mb-4">
+        <input
+          type="text"
+          readOnly
+          value={cardUrl}
+          className="flex-1 p-2 border border-gray-300 rounded"
+        />
+        <button
+          onClick={() => {
+            navigator.clipboard.writeText(cardUrl);
+            alert("URL copied to clipboard!");
+          }}
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+        >
+          Copy
+        </button>
+      </div>
+
+      {/* Close Button */}
+      <button
+        onClick={() => setIsModalOpen(false)}
+        className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 transition w-full"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
+
+
                 {/* Tabs */}
                 <div className="border-b border-gray-200 mb-4">
                   <nav className="flex space-x-8">

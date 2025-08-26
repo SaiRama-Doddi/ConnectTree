@@ -7,11 +7,15 @@ import UserDashboard from "./pages/UserDashboard";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Example from "./pages/Example";
+import CardPage from "./pages/CardPage";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+
+        <Route path="/cards/:id" element={<CardPage />} />
+        
         <Route path="/ex" element={<Example token={""}/>} />
 
         <Route path="/footer" element={<Footer />} />

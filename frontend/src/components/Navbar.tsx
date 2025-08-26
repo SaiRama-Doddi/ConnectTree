@@ -5,7 +5,21 @@ import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
-   const navigate = useNavigate(); // add this
+  const navigate = useNavigate();
+
+  // Check if user is logged in (for example, using token in localStorage)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate("/login");
+  };
 
   const navigationItems = [
     { name: "Home", href: "#" },
@@ -20,7 +34,6 @@ const Navbar = () => {
     const handleScroll = () => {
       setIsSticky(window.scrollY > 0);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -58,12 +71,23 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Login Button */}
+          {/* Login/Logout Button */}
           <div className="hidden md:flex items-center">
-            <button className="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors duration-200 shadow-sm"
-             onClick={() => navigate("/login")} >
-              Login
-            </button>
+            {isLoggedIn ? (
+              <button
+                onClick={handleLogout}
+                className="bg-red-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-red-700 transition-colors duration-200 shadow-sm"
+              >
+                Logout
+              </button>
+            ) : (
+              <button
+                onClick={() => navigate("/login")}
+                className="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors duration-200 shadow-sm"
+              >
+                Login
+              </button>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -91,9 +115,21 @@ const Navbar = () => {
                 </a>
               ))}
               <div className="px-3 py-2">
-                <button className="w-full bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors duration-200 shadow-sm">
-                  Login
-                </button>
+                {isLoggedIn ? (
+                  <button
+                    onClick={handleLogout}
+                    className="w-full bg-red-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-red-700 transition-colors duration-200 shadow-sm"
+                  >
+                    Logout
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => navigate("/login")}
+                    className="w-full bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors duration-200 shadow-sm"
+                  >
+                    Login
+                  </button>
+                )}
               </div>
             </div>
           </div>
