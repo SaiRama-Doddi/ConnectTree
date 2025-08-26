@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { saveAuth } from "../utils/auth";
 import Navbar from "./Navbar"; // adjust path if needed
+import   Footer  from "./Footer"; // adjust path if needed
 
 
 export default function Login() {
@@ -68,6 +69,8 @@ const handleLogin = async (e: React.FormEvent) => {
         </button>
       </form>
     </div>
+
+    <Footer />
     </>
   );
 }
