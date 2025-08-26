@@ -1,20 +1,36 @@
-import React, { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
+   const navigate = useNavigate(); // add this
 
   const navigationItems = [
-    { name: 'Home', href: '#' },
-    { name: 'About', href: '#' },
-    { name: 'Free-Listing', href: '#' },
-    { name: 'Business', href: '#' },
-    { name: 'IT', href: '#' },
-    { name: 'Jobs', href: '#' },
+    { name: "Home", href: "#" },
+    { name: "About", href: "#" },
+    { name: "Free-Listing", href: "#" },
+    { name: "Business", href: "#" },
+    { name: "IT", href: "#" },
+    { name: "Jobs", href: "#" },
   ];
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-100">
+    <nav
+      className={`w-full top-0 z-50 transition-all duration-300 ${
+        isSticky ? "fixed bg-white shadow-md" : "relative bg-white"
+      } border-b border-gray-100`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -44,7 +60,8 @@ const Navbar = () => {
 
           {/* Login Button */}
           <div className="hidden md:flex items-center">
-            <button className="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors duration-200 shadow-sm">
+            <button className="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors duration-200 shadow-sm"
+             onClick={() => navigate("/login")} >
               Login
             </button>
           </div>
@@ -55,11 +72,7 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-gray-700 hover:text-blue-600 p-2 rounded-md transition-colors duration-200"
             >
-              {isMenuOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
+              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>

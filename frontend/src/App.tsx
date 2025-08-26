@@ -6,11 +6,13 @@ import ManagerDashboard from "./pages/ManagerDashboard";
 import UserDashboard from "./pages/UserDashboard";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Example from "./pages/Example";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/ex" element={<Example token={""}/>} />
 
         <Route path="/footer" element={<Footer />} />
         
