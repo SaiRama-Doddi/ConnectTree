@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useNavigate } from "react-router-dom";
 
 type Card = {
   _id: string;
@@ -32,6 +33,13 @@ type User = {
 };
 
 export default function AdminDashboard() {
+   const navigate = useNavigate();
+   const handleLogout = () => {
+    // Clear user token or any auth data
+    localStorage.removeItem("token");
+    // Redirect to login page
+    navigate("/login");
+  };
   const [editingCardId, setEditingCardId] = useState<string | null>(null);
   const [editedCard, setEditedCard] = useState<any>({});
   const [showForm, setShowForm] = useState(false);
@@ -127,6 +135,17 @@ export default function AdminDashboard() {
   return (
     <>
     <Navbar />
+
+   <div className="flex">
+  <button
+    onClick={handleLogout}
+    className="ml-auto bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition font-medium"
+  >
+    Logout
+  </button>
+</div>
+
+
     <div className="p-6">
       <h1 className="text-2xl font-bold">Admin Dashboard</h1>
       {/* Toggle Button */}

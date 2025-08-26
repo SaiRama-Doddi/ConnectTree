@@ -6,6 +6,7 @@ import image3 from '../assets/professional_networking-Cu1XISy5 1.png';
 import image4 from '../assets/offline_networking-BMjdeQi7 1.png';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { useNavigate } from "react-router-dom";
 import { 
   Store,
   Monitor,
@@ -69,6 +70,15 @@ interface ShareButtonProps {
 }
 
 function App() {
+
+    const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Clear user token or any auth data
+    localStorage.removeItem("token");
+    // Redirect to login page
+    navigate("/login");
+  };
   const [user, setUser] = useState<User>({ username: "", email: "", role: "" });
     const [isModalOpen, setIsModalOpen] = useState(false);
   const [card, setCard] = useState<Card>({
@@ -287,8 +297,18 @@ Description: ${card.description}
 
   return (
     <div className="min-h-screen bg-gray-50">
-    
+ 
+
      <Navbar />
+
+        <div className="flex">
+  <button
+    onClick={handleLogout}
+    className="ml-auto bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition font-medium"
+  >
+    Logout
+  </button>
+</div>
       {/* Main Content */}
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row gap-6 p-6">
