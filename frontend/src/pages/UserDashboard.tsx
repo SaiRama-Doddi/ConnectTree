@@ -207,12 +207,13 @@ const copyToClipboard = () => {
     e.preventDefault();
     if (!token) return;
 
-    axios
-      .put("http://localhost:5000/api/profile/update", card, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => setSuccess(res.data.message))
-      .catch((err) => setError(err.response?.data?.message || "Update failed"));
+   axios
+  .put(`http://localhost:5000/api/profile/update/${card._id}`, card, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  .then((res) => setSuccess("Profile updated successfully"))
+  .catch((err) => setError(err.response?.data?.message || "Update failed"));
+
   };
 
   const renderTabContent = () => {
@@ -465,7 +466,7 @@ const copyToClipboard = () => {
               <div className="p-6 pt-12">
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900">{card.name || "Shaik Ahmad Alisha"}</h3>
+                    <h3 className="text-xl font-bold text-gray-900">{card.name }</h3>
                     <p className="text-blue-600 font-medium">{card.domainRole || "UI/UX designer"}</p>
                     <p className="text-gray-500 text-sm flex items-center mt-1">
                       <MapPin className="w-4 h-4 mr-1" />
